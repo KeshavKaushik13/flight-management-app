@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useFlightStore } from '@/store/flightStore';
 import type { Flight, ReserveSeatResult } from '@/types';
 import { User, CreditCard, Globe, Calendar, Loader2, AlertTriangle } from 'lucide-react';
+import { passengerSchema } from '@/lib/validators';
 
 interface Props { flight: Flight; userId: string }
 
@@ -54,8 +55,14 @@ export function PassengerForm({ flight, userId }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!passengerForm.full_name || !passportNo || !passengerForm.nationality || !passengerForm.dob) {
-      setError('All fields are required.');
+    const parsed = passengerSchema.safeParse({
+      full_name:   passengerForm.full_name,
+      passport_no: passportNo,
+      nationality: passengerForm.nationality,
+      dob:         passengerForm.dob,
+    });
+    if (!parsed.success) {
+      setError(parsed.error.issues[0].message);
       return;
     }
 
@@ -77,7 +84,7 @@ export function PassengerForm({ flight, userId }: Props) {
       p_dob:         passengerForm.dob,
     });
 
-    const result = data as ReserveSeatResult | null;
+    const result = data as ReserveSeatResult | null; // rename to avoid conflict with zod parsed
 
     if (rpcError || !result?.success) {
       setOptimistic(null);
@@ -181,7 +188,11 @@ export function PassengerForm({ flight, userId }: Props) {
         </div>
       </div>
 
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+      {error && (
+        <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-sm text-red-700 flex items-center gap-2">
+          <span>⚠</span> {error}
+        </div>
+      )}
 
       <button type="submit" disabled={loading} className="btn-primary w-full py-3 text-base">
         {loading ? (

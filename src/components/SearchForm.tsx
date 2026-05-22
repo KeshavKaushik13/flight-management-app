@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MapPin, Calendar, Users, ArrowRight } from 'lucide-react';
 import { useFlightStore } from '@/store/flightStore';
+import { searchSchema } from '@/lib/validators';
 
 const AIRPORTS = [
   'Delhi (DEL)',
@@ -29,12 +30,9 @@ export function SearchForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.origin || !form.destination || !form.date) {
-      setError('Please fill in all fields.');
-      return;
-    }
-    if (form.origin === form.destination) {
-      setError('Origin and destination cannot be the same.');
+    const parsed = searchSchema.safeParse(form);
+    if (!parsed.success) {
+      setError(parsed.error.issues[0].message);
       return;
     }
     setSearch(form);
