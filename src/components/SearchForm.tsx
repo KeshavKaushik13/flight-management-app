@@ -14,12 +14,10 @@ const AIRPORTS = [
 ];
 
 export function SearchForm() {
-  const router       = useRouter();
-  const searchQuery  = useFlightStore((s) => s.searchQuery);
-  const setSearch    = useFlightStore((s) => s.setSearchQuery);
-  const setStep      = useFlightStore((s) => s.setCurrentStep);
+  const router    = useRouter();
+  const setSearch = useFlightStore((s) => s.setSearchQuery);
+  const setStep   = useFlightStore((s) => s.setCurrentStep);
 
-  // Always start fresh on home page — don't show stale previous search
   const [form, setForm] = useState({
     origin:      '',
     destination: '',
@@ -47,10 +45,11 @@ export function SearchForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Origin */}
         <div>
-          <label className="label">From</label>
+          <label htmlFor="origin" className="label">From</label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <select
+              id="origin"
               className="input pl-9"
               value={form.origin}
               onChange={(e) => setForm({ ...form, origin: e.target.value })}
@@ -65,10 +64,11 @@ export function SearchForm() {
 
         {/* Destination */}
         <div>
-          <label className="label">To</label>
+          <label htmlFor="destination" className="label">To</label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <select
+              id="destination"
               className="input pl-9"
               value={form.destination}
               onChange={(e) => setForm({ ...form, destination: e.target.value })}
@@ -83,10 +83,11 @@ export function SearchForm() {
 
         {/* Date */}
         <div>
-          <label className="label">Date</label>
+          <label htmlFor="date" className="label">Date</label>
           <div className="relative">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
+              id="date"
               type="date"
               className="input pl-9"
               min={new Date().toISOString().split('T')[0]}
@@ -98,10 +99,11 @@ export function SearchForm() {
 
         {/* Passengers */}
         <div>
-          <label className="label">Passengers</label>
+          <label htmlFor="passengers" className="label">Passengers</label>
           <div className="relative">
             <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <select
+              id="passengers"
               className="input pl-9"
               value={form.passengers}
               onChange={(e) => setForm({ ...form, passengers: Number(e.target.value) })}
