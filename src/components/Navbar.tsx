@@ -46,7 +46,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-bold text-blue-600">
           <Plane className="h-5 w-5" />
-          <span className="text-lg">SkyBook</span>
+          <span className="text-lg">BoardPass</span>
         </Link>
 
         {/* Desktop links */}

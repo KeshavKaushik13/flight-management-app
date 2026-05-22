@@ -1,6 +1,6 @@
 {
-  "name": "SkyBook — Flight Management",
-  "short_name": "SkyBook",
+  "name": "BoardPass — Flight Management",
+  "short_name": "BoardPass",
   "description": "Search, book and manage your flights",
   "start_url": "/",
   "display": "standalone",

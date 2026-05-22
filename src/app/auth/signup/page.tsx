@@ -48,7 +48,7 @@ export default function SignupPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 text-white text-2xl font-extrabold">
-            <Plane className="h-7 w-7" /> SkyBook
+            <Plane className="h-7 w-7" /> BoardPass
           </div>
           <p className="text-blue-200 mt-2">Create your free account</p>
         </div>

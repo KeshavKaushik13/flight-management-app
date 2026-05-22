@@ -83,11 +83,11 @@ WHERE flight_id = '44444444-0000-0000-0000-000000000001'
 -- ── Test User ────────────────────────────────────────────────
 -- Cannot be created via SQL (Supabase Auth manages users).
 -- Create manually in Supabase Dashboard → Authentication → Users → Add user:
---   Email:    test@skybook.dev
+--   Email:    test@BoardPass.dev
 --   Password: Test@123456
 -- OR run this in your terminal after setting SUPABASE_SERVICE_ROLE_KEY:
 --   curl -X POST https://YOUR_PROJECT.supabase.co/auth/v1/admin/users \
 --     -H "apikey: YOUR_SERVICE_ROLE_KEY" \
 --     -H "Authorization: Bearer YOUR_SERVICE_ROLE_KEY" \
 --     -H "Content-Type: application/json" \
---     -d '{"email":"test@skybook.dev","password":"Test@123456","email_confirm":true}'
+--     -d '{"email":"test@BoardPass.dev","password":"Test@123456","email_confirm":true}'

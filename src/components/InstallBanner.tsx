@@ -43,7 +43,7 @@ export function InstallBanner() {
       <div className="flex items-center gap-3 rounded-2xl bg-blue-600 p-4 text-white shadow-xl">
         <Download className="h-5 w-5 shrink-0" />
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold">Install SkyBook</p>
+          <p className="text-sm font-semibold">Install BoardPass</p>
           <p className="text-xs text-blue-200 mt-0.5">Add to home screen for offline access</p>
         </div>
         <div className="flex items-center gap-2">

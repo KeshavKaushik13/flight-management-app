@@ -1,4 +1,4 @@
-# ✈️ SkyBook — Flight Management PWA
+# ✈️ BoardPass — Flight Management PWA
 
 A production-like flight management web app built with **Next.js 14 App Router**, **Supabase**, **Zustand**, and **Tailwind CSS**.
 
@@ -11,7 +11,7 @@ A production-like flight management web app built with **Next.js 14 App Router**
 
 ## 🧪 Test Credentials
 ```
-Email:    test@skybook.dev
+Email:    test@BoardPass.dev
 Password: Test@123456
 ```
 Create this account in your Supabase Auth dashboard, or sign up through the app.
