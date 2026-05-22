@@ -18,7 +18,13 @@ export function SearchForm() {
   const setSearch    = useFlightStore((s) => s.setSearchQuery);
   const setStep      = useFlightStore((s) => s.setCurrentStep);
 
-  const [form, setForm] = useState(searchQuery);
+  // Always start fresh on home page — don't show stale previous search
+  const [form, setForm] = useState({
+    origin:      '',
+    destination: '',
+    date:        '',
+    passengers:  1,
+  });
   const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {

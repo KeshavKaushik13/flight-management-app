@@ -4,6 +4,10 @@ import { Navbar } from '@/components/Navbar';
 import { InstallBanner } from '@/components/InstallBanner';
 
 export const metadata: Metadata = {
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/icons/icon-192x192.png',
+  },
   title: 'SkyBook — Flight Management',
   description: 'Search, book, and manage your flights with ease.',
   manifest: '/manifest.json',
