@@ -8,13 +8,13 @@ export const metadata: Metadata = {
     icon: '/favicon.svg',
     apple: '/icons/icon-192x192.png',
   },
-  title: 'BoardPass — Flight Management',
+  title: 'SkyBook — Flight Management',
   description: 'Search, book, and manage your flights with ease.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'BoardPass',
+    title: 'SkyBook',
   },
 };
 
@@ -22,7 +22,7 @@ export const viewport: Viewport = {
   themeColor: '#2563eb',
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
+  // maximumScale intentionally not set — allows user zoom for accessibility
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <InstallBanner />
         <main className="min-h-screen">{children}</main>
         <footer className="mt-16 border-t border-slate-100 py-6 text-center text-xs text-slate-400">
-          © {new Date().getFullYear()} BoardPass. All rights reserved.
+          © {new Date().getFullYear()} SkyBook. All rights reserved.
         </footer>
       </body>
     </html>
