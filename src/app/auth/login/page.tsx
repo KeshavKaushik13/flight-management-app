@@ -38,7 +38,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 text-white text-2xl font-extrabold">
-            <Plane className="h-7 w-7" /> BoardPass
+            <Plane className="h-7 w-7" /> SkyBook
           </div>
           <p className="text-blue-200 mt-2">Sign in to manage your bookings</p>
         </div>
@@ -89,11 +89,7 @@ export default function LoginPage() {
             </Link>
           </p>
 
-          <div className="rounded-xl bg-slate-50 p-3 text-xs text-slate-500 border border-slate-100">
-            <p className="font-semibold mb-1">🧪 Test Account</p>
-            <p>Email: <span className="font-mono">test@BoardPass.dev</span></p>
-            <p>Password: <span className="font-mono">Test@123456</span></p>
-          </div>
+
         </form>
       </div>
     </div>
