@@ -200,6 +200,8 @@ src/
 supabase/
 └── migrations/             001–004 SQL migration files
 ```
+---
+
 ## Lighthouse Scores
 
 ![Lighthouse Scores](./screenshots/lighthouse.png)
@@ -208,6 +210,8 @@ supabase/
 - Accessibility: 94
 - Best Practices: 100
 - SEO: 100
+
+---
 
 ## PWA Configuration
 
