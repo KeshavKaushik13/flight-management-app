@@ -12,7 +12,7 @@ A production-like flight management web app built with **Next.js 14 App Router**
 ## 🧪 Test Credentials
 ```
 Email:    test@boardpass.dev
-Password: Test@123456
+Password: test@123456
 ```
 Create this account in your Supabase Auth dashboard, or sign up through the app.
 
