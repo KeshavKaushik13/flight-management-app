@@ -5,12 +5,13 @@ A production-like flight management web app built with **Next.js 14 App Router**
 ---
 
 ## 🚀 Live Demo
-> **Production URL:**https://flight-management-app-boardpass.vercel.app/
+> **Production URL:** https://flight-management-app-boardpass.vercel.app/
+
 ---
 
 ## 🧪 Test Credentials
 ```
-Email:    test@BoardPass.dev
+Email:    test@boardpass.dev
 Password: Test@123456
 ```
 Create this account in your Supabase Auth dashboard, or sign up through the app.
@@ -24,7 +25,8 @@ Create this account in your Supabase Auth dashboard, or sign up through the app.
 | Database & Auth | Supabase (PostgreSQL + RLS + Realtime) |
 | State Management | Zustand with persist middleware |
 | Styling | Tailwind CSS |
-| PWA | next-pwa |
+| Validation | Zod |
+| PWA | @ducanh2912/next-pwa |
 | Language | TypeScript (strict, no `any`) |
 
 ---
@@ -33,7 +35,7 @@ Create this account in your Supabase Auth dashboard, or sign up through the app.
 
 ### 1. Clone & install
 ```bash
-git clone https://github.com/your-username/flight-management-app
+git clone https://github.com/KeshavKaushik13/flight-management-app
 cd flight-management-app
 npm install
 ```
@@ -60,7 +62,10 @@ supabase/migrations/004_seed.sql
 ### 4. Enable Supabase Realtime
 In Supabase Dashboard → **Database → Replication**, enable the `seats` table for realtime.
 
-### 5. Run the dev server
+### 5. Add redirect URL in Supabase
+Authentication → URL Configuration → add `http://localhost:3000/auth/callback`
+
+### 6. Run the dev server
 ```bash
 npm run dev
 ```
@@ -78,7 +83,7 @@ passengers    id, booking_id, full_name, passport_no, nationality, dob
 reschedules   id, booking_id, old_flight_id, new_flight_id, requested_at, fee_charged
 ```
 
-**Seed data:** 8 flights across 4 routes (DEL↔BOM, BOM↔BLR, BLR↔HYD, DEL↔BLR), each with 180 seats (rows 1–30, columns A–F).
+**Seed data:** 20 flights across 4 routes (DEL↔BOM, BOM↔BLR, BLR↔HYD, DEL↔BLR), 5 per route over the next 14 days, each with 180 seats (rows 1–30, columns A–F).
 
 ---
 
@@ -91,6 +96,14 @@ All tables have RLS enabled. Key policies:
 
 ### Sensitive Data Exclusion
 Passport numbers are **never persisted to localStorage**. `passport_no` is excluded at the **type level** — it is not a field in `PassengerFormData` at all, so it cannot accidentally enter the Zustand store. It lives exclusively in `useState` inside `PassengerForm` for the duration of a single session, and is only ever sent directly to the Supabase RPC over HTTPS.
+
+---
+
+## ✅ Form Validation
+
+Client-side validation using **Zod** on all user-facing forms (`src/lib/validators.ts`):
+- **Search form** — origin, destination, date required; origin ≠ destination enforced via `.refine()`
+- **Passenger form** — name min 2 chars, passport min 5 chars, DOB must be in the past
 
 ---
 
@@ -107,7 +120,7 @@ Passport numbers are **never persisted to localStorage**. `passport_no` is exclu
     full_name,      // Persisted
     nationality,    // Persisted
     dob,            // Persisted
-    // passport_no  ← NOT persisted (partialize excludes it)
+    // passport_no  ← NOT in this store at all (excluded at type level)
   },
   optimisticSeatId, // NOT persisted: transient optimistic UI state
 }
@@ -158,7 +171,6 @@ Atomically frees old seat, reserves new seat, records the reschedule, and update
 - **Tooltip on hover:** shows class and extra fee
 - **Scrollable and touch-friendly** on mobile (using `overflow-y-auto` and `touch-pan-y`)
 
-
 ---
 
 ## 📁 Project Structure
@@ -176,12 +188,15 @@ src/
 │   ├── bookings/           My Bookings (reschedule, cancel)
 │   └── offline/            PWA offline fallback
 ├── components/             Shared UI components
-├── lib/supabase/           Browser, server & middleware clients
+├── lib/
+│   ├── supabase/           Browser, server & middleware clients
+│   └── validators.ts       Zod schemas
 ├── store/                  Zustand stores
 ├── types/                  Shared TypeScript interfaces
 supabase/
 └── migrations/             001–004 SQL migration files
 ```
+
 ---
 
 ## Lighthouse Scores
@@ -197,28 +212,29 @@ supabase/
 
 ## PWA Configuration
 
-The Lighthouse PWA audit category was deprecated and removed in Chrome 100+.  
+The Lighthouse PWA audit category was deprecated and removed in Chrome 100+.
 PWA compliance verified via Chrome DevTools → Application → Manifest:
 
 ![PWA Manifest Identity](./screenshots/pwa-manifest-1.png)
 ![PWA Manifest Icons](./screenshots/pwa-manifest-2.png)
 
-- ✅ manifest.json with name, icons (192×192, 512×512), theme_color, display: standalone  
-- ✅ Service worker registered and active (sw.js)  
-- ✅ Offline fallback page at /offline  
-- ✅ My Bookings readable offline via Zustand persist  
-- ✅ Install prompt banner for first-time mobile visitors  
+- ✅ manifest.json with name, icons (192×192, 512×512), theme_color, display: standalone
+- ✅ Service worker registered and active (sw.js)
+- ✅ Offline fallback page at /offline
+- ✅ My Bookings readable offline via Zustand persist
+- ✅ Install prompt banner for first-time mobile visitors
 
 | Cache Strategy | Applied To |
 |---|---|
 | `StaleWhileRevalidate` | Supabase flight search API calls |
 | `CacheFirst` | `/_next/static/*` and image assets |
+
 ---
 
 ## 📝 Trade-offs & What I'd Do Differently
 
 - **Payment integration**: Currently simplified to a price display. In production, Razorpay/Stripe would be integrated before calling the `reserve_seat` RPC.
-- **Multi-passenger booking**: The schema supports multiple `passengers` per booking, but the UI only handles one traveller per booking for now.
+- **Multi-passenger booking**: The schema supports multiple `passengers` per booking, but the UI only handles one traveller per booking for now. Full implementation would require a multi-step passenger form and a bulk seat reservation RPC.
 - **Email notifications**: Would add Supabase Edge Functions to send booking confirmation emails via Resend or SendGrid.
 - **Seat map performance**: For very large aircraft (A380, 500+ seats), the current DOM-per-seat approach would need virtualization (react-window).
-- **PWA icons**: Placeholder paths are in the manifest; real PNG icons should be generated and added to `/public/icons/`.
+- **Zod on server**: Currently Zod validates only on the client. In production, the same schemas would be reused in API routes for server-side validation as well.
