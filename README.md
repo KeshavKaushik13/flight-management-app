@@ -159,23 +159,6 @@ Atomically frees old seat, reserves new seat, records the reschedule, and update
 - **Tooltip on hover:** shows class and extra fee
 - **Scrollable and touch-friendly** on mobile (using `overflow-y-auto` and `touch-pan-y`)
 
----
-
-## 📱 PWA
-
-Configured with `next-pwa`:
-
-| Cache Strategy | Applied To |
-|---|---|
-| `StaleWhileRevalidate` | Supabase flight search API calls |
-| `CacheFirst` | `/_next/static/*` and image assets |
-
-- Offline fallback page at `/offline`
-- My Bookings uses last-cached data via Zustand userStore
-- Install prompt banner for first-time mobile visitors
-- `manifest.json` with 192×192 and 512×512 icons
-
-> 📸 **Lighthouse PWA Screenshot** — _Add screenshot here after running audit_
 
 ---
 
@@ -227,9 +210,10 @@ PWA compliance verified via Chrome DevTools → Application → Manifest:
 - ✅ My Bookings readable offline via Zustand persist  
 - ✅ Install prompt banner for first-time mobile visitors  
 
-Cache strategies:  
-- StaleWhileRevalidate → Supabase flight search API  
-- CacheFirst → /_next/static/* assets
+| Cache Strategy | Applied To |
+|---|---|
+| `StaleWhileRevalidate` | Supabase flight search API calls |
+| `CacheFirst` | `/_next/static/*` and image assets |
 ---
 
 ## 📝 Trade-offs & What I'd Do Differently
