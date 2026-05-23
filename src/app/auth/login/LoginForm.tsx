@@ -29,8 +29,10 @@ export function LoginForm() {
       setLoading(false);
       return;
     }
-    router.push(redirect);
-    router.refresh();
+
+    // Force a full page navigation instead of client-side push
+    // This ensures middleware re-evaluates the session cookie on Vercel
+    window.location.href = redirect;
   };
 
   return (
