@@ -200,7 +200,32 @@ src/
 supabase/
 └── migrations/             001–004 SQL migration files
 ```
+## Lighthouse Scores
 
+![Lighthouse Scores](./screenshots/lighthouse.png)
+
+- Performance: 100
+- Accessibility: 94
+- Best Practices: 100
+- SEO: 100
+
+## PWA Configuration
+
+The Lighthouse PWA audit category was deprecated and removed in Chrome 100+.  
+PWA compliance verified via Chrome DevTools → Application → Manifest:
+
+![PWA Manifest Identity](./screenshots/pwa-manifest-1.png)
+![PWA Manifest Icons](./screenshots/pwa-manifest-2.png)
+
+- ✅ manifest.json with name, icons (192×192, 512×512), theme_color, display: standalone  
+- ✅ Service worker registered and active (sw.js)  
+- ✅ Offline fallback page at /offline  
+- ✅ My Bookings readable offline via Zustand persist  
+- ✅ Install prompt banner for first-time mobile visitors  
+
+Cache strategies:  
+- StaleWhileRevalidate → Supabase flight search API  
+- CacheFirst → /_next/static/* assets
 ---
 
 ## 📝 Trade-offs & What I'd Do Differently
